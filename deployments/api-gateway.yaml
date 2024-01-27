@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: farid25/api-gateway:v1
+          ports:
+            - containerPort: 8000  # Adjust port if your Node.js app uses a different one
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-service
+spec:
+  selector:
+    app: api-gateway
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer
