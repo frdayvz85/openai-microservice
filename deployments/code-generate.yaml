@@ -27,7 +27,5 @@ spec:
   selector:
     app: code-deploy
   ports:
-    - protocol: TCP
-      port: 5050
+    - port: 5050
       targetPort: 5000
-  type: LoadBalancer

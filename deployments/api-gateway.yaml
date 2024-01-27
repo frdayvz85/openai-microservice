@@ -17,6 +17,9 @@ spec:
           image: farid25/api-gateway:v1
           ports:
             - containerPort: 8000  # Adjust port if your Node.js app uses a different one
+          envFrom:
+          - configMapRef:
+              name: nodeCGApiUrl
 
 ---
 apiVersion: v1
