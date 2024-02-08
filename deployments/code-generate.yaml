@@ -14,10 +14,15 @@ spec:
     spec:
       containers:
         - name: code-deploy
-          image: farid25/cg:v1
+          image: farid25/code-generate:v2
           ports:
             - containerPort: 5000  # Adjust port if your Node.js app uses a different one
-
+          env:
+          - name: OPENAI_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: openai-secret
+                key: openai-api-key
 ---
 apiVersion: v1
 kind: Service

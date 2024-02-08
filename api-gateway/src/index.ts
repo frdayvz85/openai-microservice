@@ -11,6 +11,7 @@ const app: Express = express();
 const port = process.env.PORT || 8000;
 
 const nodeCGApiUrl: string = process.env.CODE_GENERATE_API_URL || ""
+const nodeVGApiUrl: string = process.env.VIDEO_GENERATE_API_URL || ""
 
 process.on('uncaughtException', function (err) {
     console.log(err);
@@ -23,7 +24,7 @@ app.use(morgan('tiny'));
 
 
 // Proxy routes
-const proxyMiddleware = createProxyMiddleware({
+const proxyMiddlewareCode = createProxyMiddleware({
     target: nodeCGApiUrl ? nodeCGApiUrl : 'http://www.example.org',
     changeOrigin: true,
     pathRewrite: {
@@ -31,7 +32,17 @@ const proxyMiddleware = createProxyMiddleware({
     },
 });
 
-app.use('/code-generate', proxyMiddleware);
+const proxyMiddlewareVideo = createProxyMiddleware({
+    target: nodeVGApiUrl ? nodeVGApiUrl : 'http://www.example.org',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/video-generate': '',
+    },
+});
+
+
+app.use('/code-generate', proxyMiddlewareCode);
+app.use('/video-generate', proxyMiddlewareVideo);
 
 app.get("/", (req: Request, res: Response) => {
     const message = `API is working as expected - API gateway: ${os.hostname()}`

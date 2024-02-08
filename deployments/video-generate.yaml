@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: video-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: video-deploy
+  template:
+    metadata:
+      labels:
+        app: video-deploy
+    spec:
+      containers:
+        - name: video-deploy
+          image: farid25/video-generate:v1
+          ports:
+            - containerPort: 4000  # Adjust port if your Node.js app uses a different one
+          env:
+          - name: REPLICATE_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: replicate-secret
+                key: replicate-api-key
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: video-deploy-service
+spec:
+  selector:
+    app: video-deploy
+  ports:
+    - port: 5050
+      targetPort: 4000

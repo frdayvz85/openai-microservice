@@ -14,12 +14,14 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: farid25/apig:v1
+          image: farid25/apigt:v1
           ports:
             - containerPort: 8000  # Adjust port if your Node.js app uses a different one
           envFrom:
           - configMapRef:
               name: node-cg-url
+          - configMapRef:
+              name: node-vg-url
 
 ---
 apiVersion: v1
