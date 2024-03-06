@@ -30,6 +30,7 @@ const proxyMiddlewareCode = createProxyMiddleware({
     pathRewrite: {
         '^/code-generate': '',
     },
+    timeout: 300000 // 5 mins
 });
 
 const proxyMiddlewareVideo = createProxyMiddleware({
@@ -38,6 +39,7 @@ const proxyMiddlewareVideo = createProxyMiddleware({
     pathRewrite: {
         '^/video-generate': '',
     },
+    timeout: 450000 // 7.5 mins
 });
 
 

@@ -1,0 +1,39 @@
+.inputContainer {
+    position: relative;
+    // margin-bottom: 20px;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    padding: 15px 10px;
+    // border: none;
+    outline: none;
+    border: 2px solid #ccc;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: "Poppins", sans-serif;
+}
+
+.input::placeholder {
+    font-family: "Poppins", sans-serif;
+}
+
+.input:focus {
+    border-bottom: 2px solid #007bff;
+}
+
+.focusBorder {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #007bff;
+    transition: all 0.3s ease;
+}
+
+.input:focus+.focusBorder {
+    width: 100%;
+}

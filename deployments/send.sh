@@ -1,4 +1,5 @@
-# Function to update Docker image
+
+
 update_docker_image() {
     # Check if Docker image name is provided
     if [ -z "$1" ]; then
@@ -46,4 +47,4 @@ fi
 update_docker_image "$1" "$2"
 
 # Example use case
-# ./run.sh ../api-gateway apigt //inside of deployments folder run this code
+# ./send.sh ../api-gateway apigt //inside of deployments folder run this code

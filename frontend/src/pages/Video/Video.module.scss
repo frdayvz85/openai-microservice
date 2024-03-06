@@ -1,0 +1,38 @@
+.container {
+    width: 80%;
+    margin: 10vh auto;
+}
+
+.form {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+
+.codeContainer {
+    margin-top: 1rem;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.loading {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.videoContent {
+    width: 100%;
+    aspect-ratio: 16/9;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #000000;
+    background-color: #000000;
+}

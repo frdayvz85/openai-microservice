@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: code
+          image: farid25/frontend:v10
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: api-gtw-url
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 8080
+      targetPort: 8000
+  # type: LoadBalancer

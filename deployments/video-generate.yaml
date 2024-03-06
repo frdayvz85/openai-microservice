@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: video-deploy
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: video-deploy
@@ -14,15 +14,23 @@ spec:
     spec:
       containers:
         - name: video-deploy
-          image: farid25/video-generate:v1
+          image: farid25/video-generate:v5
           ports:
-            - containerPort: 4000  # Adjust port if your Node.js app uses a different one
+            - containerPort: 4000 # Adjust port if your Node.js app uses a different one
+          envFrom:
+            - configMapRef:
+                name: api-rate-limit-video
           env:
-          - name: REPLICATE_API_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: replicate-secret
-                key: replicate-api-key
+            - name: REPLICATE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: replicate-secret
+                  key: replicate-api-key
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongodb-uri
 
 ---
 apiVersion: v1

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: code-deploy
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: code-deploy
@@ -14,15 +14,24 @@ spec:
     spec:
       containers:
         - name: code-deploy
-          image: farid25/code-generate:v2
+          image: farid25/code-generate:v6
           ports:
-            - containerPort: 5000  # Adjust port if your Node.js app uses a different one
+            - containerPort: 5000 # Adjust port if your Node.js app uses a different one
+          envFrom:
+            - configMapRef:
+                name: api-rate-limit-code
           env:
-          - name: OPENAI_API_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: openai-secret
-                key: openai-api-key
+            - name: OPENAI_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: openai-secret
+                  key: openai-api-key
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongodb-uri
+
 ---
 apiVersion: v1
 kind: Service

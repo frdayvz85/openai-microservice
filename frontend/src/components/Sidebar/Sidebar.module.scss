@@ -1,0 +1,241 @@
+.sidebar {
+    position: fixed;
+    top: 10vh;
+    left: 0px;
+    height: calc(100vh - 17vh);
+    /* Adjust height to occupy the remaining viewport height below the header */
+    width: 250px;
+    background-color: #111827;
+    padding: 10px 14px;
+    transition: all 0.2s ease;
+    font-family: "Poppins", sans-serif;
+    // overflow-y: auto;
+    /* Allow sidebar to be scrollable if its content exceeds the viewport height */
+}
+
+.sidebar .text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    /* transition: var(--trans-04); */
+    white-space: unset;
+    opacity: 1;
+}
+
+.sidebar .image {
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.sidebar header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+}
+
+.sidebar .imageText img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.sidebar header .imageText {
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    width: 100%;
+}
+
+.header .imageText .headerText {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15px;
+    font-size: 24px;
+}
+
+.headerText .main {
+    font-weight: 600;
+}
+
+.headerText .sub {
+    margin-left: 5px;
+}
+
+.sidebar header .toggle {
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.sidebar li {
+    height: 50px;
+    margin-top: 10px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar li .icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    font-size: 20px;
+}
+
+.sidebar li .icons,
+.sidebar li .text {
+    color: #707070;
+    transition: all 0.3s ease;
+}
+
+.sidebar .searchBar input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-radius: 6px;
+    background-color: #f4f2f2;
+    font-family: "Poppins", sans-serif;
+}
+
+.sidebar .searchBar {
+    background-color: #f4f2f2;
+}
+
+.sidebar li a {
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding-right: 50px;
+    border-radius: 6px;
+    transition: all 0.4s ease;
+    text-align: left;
+    color: #ffffff;
+}
+
+.sidebar li a:hover {
+    background: #f4f2f2;
+}
+
+.sidebar li a:hover .icons,
+.sidebar li a:hover .navText {
+    color: #000;
+}
+
+.sidebar .menuBar {
+    // height: 100%;
+    height: calc(100% - 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menuBar .mode {
+    position: relative;
+    border-radius: 6px;
+    background: #f4f2f2;
+}
+
+.menuBar .mode .moonSun {
+    height: 50px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.menuBar .mode i {
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+.menuBar .mode i.sun {
+    opacity: 0;
+}
+
+body.dark .menuBar .mode i.sun {
+    opacity: 1;
+}
+
+body.dark .menuBar .mode i.moon {
+    opacity: 0;
+}
+
+.menuBar .mode .toggleSwitch {
+    position: absolute;
+    right: -10px;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    background: #f4f2f2;
+    cursor: pointer;
+}
+
+.toggleSwitch .switch {
+    position: relative;
+    height: 22px;
+    width: 44px;
+    background-color: #ddd;
+    border-radius: 25px;
+}
+
+.switch::before {
+    content: "";
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    background-color: #fff;
+}
+
+body.dark .switch::before {
+    left: 25px;
+}
+
+body.dark .sidebar .image img {
+    background-color: #fff;
+}
+
+.sidebar.close {
+    width: 78px;
+}
+
+.sidebar.close .navText,
+.sidebar.close .headerText {
+    opacity: 0;
+}
+
+.sidebar.close .searchBar {
+    background-color: #fff;
+}
+
+body.dark .searchBar input {
+    color: white;
+}
+
+.sidebar.close .toggle {
+    transform: translateY(-50%);
+}

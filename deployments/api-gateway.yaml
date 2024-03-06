@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api-gateway
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: api-gateway
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: farid25/apigt:v1
+          image: farid25/apigt:v4
           ports:
             - containerPort: 8000  # Adjust port if your Node.js app uses a different one
           envFrom:
@@ -32,7 +32,5 @@ spec:
   selector:
     app: api-gateway
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 8080
       targetPort: 8000
-  type: LoadBalancer

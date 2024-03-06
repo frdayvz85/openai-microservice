@@ -12,3 +12,27 @@ metadata:
   name: node-vg-url
 data:
   VIDEO_GENERATE_API_URL: "http://video-deploy-service.default.svc.cluster.local:5050"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gtw-url
+data:
+  VITE_API_URL: "http://api-gateway-service.default.svc.cluster.local:5050"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-rate-limit-code
+data:
+  API_RATE_LIMIT: "2"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-rate-limit-video
+data:
+  API_RATE_LIMIT: "2"
