@@ -12,6 +12,8 @@ const port = process.env.PORT || 8000;
 
 const nodeCGApiUrl: string = process.env.CODE_GENERATE_API_URL || ""
 const nodeVGApiUrl: string = process.env.VIDEO_GENERATE_API_URL || ""
+const fastapiIGApiUrl: string = process.env.IMAGE_GENERATE_API_URL || ""
+const fastapiMGApiUrl: string = process.env.MUSIC_GENERATE_API_URL || ""
 
 process.on('uncaughtException', function (err) {
     console.log(err);
@@ -42,9 +44,29 @@ const proxyMiddlewareVideo = createProxyMiddleware({
     timeout: 450000 // 7.5 mins
 });
 
+const proxyMiddlewareImage = createProxyMiddleware({
+    target: fastapiIGApiUrl ? fastapiIGApiUrl : 'http://www.example.org',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/image-generate': '',
+    },
+    timeout: 450000 // 7.5 mins
+});
+
+const proxyMiddlewareMusic = createProxyMiddleware({
+    target: fastapiMGApiUrl ? fastapiMGApiUrl : 'http://www.example.org',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/music-generate': '',
+    },
+    timeout: 450000 // 7.5 mins
+});
+
 
 app.use('/code-generate', proxyMiddlewareCode);
 app.use('/video-generate', proxyMiddlewareVideo);
+app.use('/image-generate', proxyMiddlewareImage);
+app.use('/music-generate', proxyMiddlewareMusic);
 
 app.get("/", (req: Request, res: Response) => {
     const message = `API is working as expected - API gateway: ${os.hostname()}`
