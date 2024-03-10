@@ -17,6 +17,22 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: fastapi-ig-url
+data:
+  IMAGE_GENERATE_API_URL: "http://image-deploy-service.default.svc.cluster.local:5050"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastapi-mg-url
+data:
+  MUSIC_GENERATE_API_URL: "http://music-deploy-service.default.svc.cluster.local:5050"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: api-gtw-url
 data:
   VITE_API_URL: "http://api-gateway-service.default.svc.cluster.local:5050"

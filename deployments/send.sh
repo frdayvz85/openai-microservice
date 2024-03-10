@@ -1,5 +1,4 @@
 
-
 update_docker_image() {
     # Check if Docker image name is provided
     if [ -z "$1" ]; then

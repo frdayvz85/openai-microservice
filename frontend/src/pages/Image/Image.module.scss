@@ -3,9 +3,88 @@
     margin: 10vh auto;
 }
 .imageContainer {
-    text-align: center;
-    font-size: 36px;
     margin-top: 2rem;
-    font-weight: 600;
-    color: crimson;
+}
+
+.form {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+}
+
+.select select {
+    padding: 18px 12px;
+    font-size: 16px;
+    font-weight: 700;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 140px;
+}
+
+.selectCount select {
+    padding: 18px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    // width: 50px;
+}
+
+
+/* Style select dropdown arrow */
+// .select select::-ms-expand ,
+// .selectCount select::-ms-expand {
+//     display: none;
+// }
+
+/* Style select dropdown arrow for Chrome and Firefox */
+// .select select ,
+// .selectCount select {
+//     -webkit-appearance: none;
+//     -moz-appearance: none;
+//     appearance: none;
+// }
+
+/* Hover effect */
+.select select:hover,
+.selectCount select:hover  {
+    border-color: #666;
+}
+
+/* Focus effect */
+.select select:focus,
+.selectCount select:focus {
+    border-color: #333;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.showImages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.imageSection {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 250px;
+}
+.imageSection img {
+    width: 100%;
+    height: 100%;
+}
+.imageDownload {
+    margin: 10px 0;
+    padding: 12px;
+    font-size: 17px;
+    background-color: rgb(194, 16, 194);
+    color: white;
+    border: 1px solid rgb(194, 16, 194);
+    border-radius: 8px;
+    cursor: pointer;
+}
+.imageDownload:hover {
+    transition: all 250ms ease-in-out;
+    background-color: rgb(156, 10, 156);
 }

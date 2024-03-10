@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-deploy
+  template:
+    metadata:
+      labels:
+        app: image-deploy
+    spec:
+      containers:
+        - name: image-deploy
+          image: farid25/image-generate:v1
+          ports:
+            - containerPort: 6000 # Adjust port if your FastAPI app uses a different one
+          envFrom:
+            - configMapRef:
+                name: api-rate-limit-code
+          env:
+            - name: OPENAI_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: openai-secret
+                  key: openai-api-key
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongodb-uri
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: image-deploy-service
+spec:
+  selector:
+    app: image-deploy
+  ports:
+    - port: 5050
+      targetPort: 6000

@@ -9,6 +9,8 @@ kubectl delete -f config-maps.yaml
 # Delete the deployment files
 kubectl delete -f code-generate.yaml
 kubectl delete -f video-generate.yaml
+kubectl delete -f image-generate.yaml
+kubectl delete -f music-generate.yaml
 kubectl delete -f frontend.yaml
 kubectl delete -f api-gateway.yaml
 

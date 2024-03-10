@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: music-deploy
+  template:
+    metadata:
+      labels:
+        app: music-deploy
+    spec:
+      containers:
+        - name: music-deploy
+          image: farid25/music-generate:v1
+          ports:
+            - containerPort: 7000 # Adjust port if your FastAPI app uses a different one
+          envFrom:
+            - configMapRef:
+                name: api-rate-limit-code
+          env:
+            - name: OPENAI_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: openai-secret
+                  key: openai-api-key
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: mongodb-uri
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: music-deploy-service
+spec:
+  selector:
+    app: music-deploy
+  ports:
+    - port: 5050
+      targetPort: 7000

@@ -64,7 +64,7 @@ const Video: React.FC = () => {
         </div>
       </form>
 
-      <div className={styles.codeContainer}>
+      <div className={styles.videoContainer}>
         {isLoading && (
           <div className={styles.loading}>
             <Loader />
