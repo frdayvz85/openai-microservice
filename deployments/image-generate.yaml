@@ -14,12 +14,14 @@ spec:
     spec:
       containers:
         - name: image-deploy
-          image: farid25/image-generate:v1
+          image: farid25/image-generate:v12
           ports:
             - containerPort: 6000 # Adjust port if your FastAPI app uses a different one
           envFrom:
             - configMapRef:
                 name: api-rate-limit-code
+            - configMapRef:
+                name: mongodb-name
           env:
             - name: OPENAI_API_TOKEN
               valueFrom:
@@ -31,6 +33,21 @@ spec:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongodb-uri
+            - name: CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-name
+                  key: cloudinary-cloud-name
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-key
+                  key: cloudinary-api-key
+            - name: API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-secret
+                  key: cloudinary-api-secret
 
 ---
 apiVersion: v1

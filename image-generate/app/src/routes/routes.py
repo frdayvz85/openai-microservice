@@ -6,13 +6,9 @@ from dotenv import load_dotenv
 from openai import AsyncOpenAI
 from fastapi.encoders import jsonable_encoder
 from src.models.models import Prompt, Image
-from src.db import prompts_collection
+from src.db import MongoDB
+from src.utils.cloudinary import upload_image
 
-
-from src.services.prompt import (
-    retrieve_prompts,
-    retrieve_prompt
-)
 
 load_dotenv()  # This line brings all environment variables from .env into os.environ
 
@@ -23,14 +19,20 @@ client = AsyncOpenAI(
     api_key=os.environ.get("OPENAI_API_TOKEN"),
 )
 
+
 @router.get("/prompts")
 async def get_prompts():
-    prompts = await retrieve_prompts()
+    mongo = MongoDB()
+    await mongo.connect()
+    prompts = await mongo.retrieve_prompts()
     return prompts
+
 
 @router.get("/prompts/{id}")
 async def get_prompt(id):
-    prompt = await retrieve_prompt(id)
+    mongo = MongoDB()
+    await mongo.connect()
+    prompt = await mongo.retrieve_prompt(id)
     if prompt:
         return prompt
     raise HTTPException(status_code=404, detail="Prompt not found")
@@ -38,6 +40,10 @@ async def get_prompt(id):
 
 @router.post("/image")
 async def generate_code(prompt: Image, request: Request):
+    mongo = MongoDB()
+    await mongo.connect()
+    prompts_collection = mongo.prompts_collection
+
     try:
         message = prompt.message
         size = prompt.size
@@ -52,8 +58,7 @@ async def generate_code(prompt: Image, request: Request):
             size=size,
             quality="standard",
             n=count
-        );
-
+        )
 
         print(response.data)
 
@@ -62,13 +67,14 @@ async def generate_code(prompt: Image, request: Request):
         for image_object in response.data:
             # Access the URL attribute of each image object
             url = image_object.url
-            urls.append(url)
+            res = upload_image(url, "image-generate")
+            urls.append(res)
 
         print(urls)
 
         prompt_data = {
             "userPrompt": message,
-            "images":urls ,
+            "images": urls,
             "size": size,
             "ip": ip,
             "device": user_agent,
@@ -77,13 +83,12 @@ async def generate_code(prompt: Image, request: Request):
             "updatedAt": datetime.utcnow()
         }
 
-
         # Convert the prompt_data dictionary to an instance of the Prompt model
         prompt_model = Prompt(**prompt_data)
 
         # Insert the prompt_model instance into the collection
-        await prompts_collection.insert_one(jsonable_encoder(prompt_model))
-
+        # await prompts_collection.insert_one(jsonable_encoder(prompt_model))
+        await mongo.insert_prompt(jsonable_encoder(prompt_model))
 
         return {"result": response.data}
     except Exception as error:

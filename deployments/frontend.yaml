@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: code
-          image: farid25/frontend:v10
+          image: farid25/frontend:v11
           ports:
             - containerPort: 8000
           envFrom:

@@ -6,6 +6,6 @@ COPY ./requirements.txt /image-generate/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /image-generate/requirements.txt
 
-COPY ./app /image-generate/app
+COPY ./app /image-generate
 
-CMD ["uvicorn", "app.src.app:app", "--host", "0.0.0.0", "--port", "6000"]
+CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "6000"]

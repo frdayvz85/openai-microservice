@@ -2,6 +2,7 @@ from pydantic import BaseModel, validator
 from typing import Optional, List
 from datetime import datetime
 
+
 class Image(BaseModel):
     message: str
     size: str
@@ -13,7 +14,7 @@ class Image(BaseModel):
         if v not in valid_sizes:
             raise ValueError(f"Invalid size: {v}. Valid sizes are {', '.join(valid_sizes)}")
         return v
-    
+
     @validator('count')
     def validate_count(cls, v):
         if v < 1 or v > 6:
@@ -21,12 +22,10 @@ class Image(BaseModel):
         return v
 
 
-
-
 class Prompt(BaseModel):
     userPrompt: str
     images: List[str]
-    size:str
+    size: str
     ip: str
     device: str
     type: str
@@ -40,9 +39,8 @@ class Prompt(BaseModel):
                 "images": ["image1.jpg", "image2.jpg"],
                 "ip": "192.168.1.1",
                 "device": "mobile",
-                "type": "nature",
+                "type": "image",
                 "createdAt": "2024-03-10T12:00:00",
                 "updatedAt": "2024-03-10T12:30:00"
             }
         }
-
