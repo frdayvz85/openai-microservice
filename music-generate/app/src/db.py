@@ -58,7 +58,7 @@ class MongoDB:
         else:
             print("Error: MongoDB connection not established")
             return None
-            
+
     async def delete_prompt(self, id):
         if self.prompts_collection is not None:
             result = await self.prompts_collection.delete_one({"_id": ObjectId(id)})
@@ -70,6 +70,7 @@ class MongoDB:
         else:
             print("Error: MongoDB connection not established")
             return None  
+
 
 async def main():
     mongo = MongoDB()

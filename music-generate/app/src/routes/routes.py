@@ -3,11 +3,11 @@ import os
 import asyncio
 from datetime import datetime
 from dotenv import load_dotenv
-from openai import AsyncOpenAI
+import replicate
 from fastapi.encoders import jsonable_encoder
-from src.models.models import Prompt, Image
+from src.models.models import Prompt, Music
 from src.db import MongoDB
-from src.utils.cloudinary import upload_image
+from src.utils.cloudinary import upload_music
 
 
 load_dotenv()  # This line brings all environment variables from .env into os.environ
@@ -15,9 +15,11 @@ load_dotenv()  # This line brings all environment variables from .env into os.en
 router = APIRouter()
 
 
-client = AsyncOpenAI(
-    api_key=os.environ.get("OPENAI_API_TOKEN"),
-)
+# Access REPLICATE_API_TOKEN from environment variables
+REPLICATE_API_TOKEN = os.getenv("REPLICATE_API_TOKEN")
+
+# Set the API token as an environment variable
+os.environ["REPLICATE_API_TOKEN"] = REPLICATE_API_TOKEN
 
 
 @router.get("/prompts")
@@ -46,59 +48,52 @@ async def delete_prompt(id):
         return {"result": result}
     raise HTTPException(status_code=404, detail="Prompt not found")
 
-@router.post("/image")
-async def generate_code(prompt: Image, request: Request):
+@router.post("/music")
+async def generate_music(prompt: Music, request: Request):
     mongo = MongoDB()
     await mongo.connect()
     prompts_collection = mongo.prompts_collection
 
     try:
         message = prompt.message
-        size = prompt.size
-        count = prompt.count
 
         ip = request.client.host
         user_agent = request.headers.get("user-agent")
 
-        response = await client.images.generate(
-            model="dall-e-2",
-            prompt=message,
-            size=size,
-            quality="standard",
-            n=count
+        input = {
+            "prompt": message,
+            "model_version": "stereo-large",
+            "output_format": "mp3",
+            "normalization_strategy": "peak"
+        }
+
+        output = replicate.run(
+            "meta/musicgen:671ac645ce5e552cc63a54a2bbff63fcf798043055d2dac5fc9e36a837eedcfb",
+            input=input
         )
 
-        print(response.data)
-
-        urls = []
-
-        for image_object in response.data:
-            # Access the URL attribute of each image object
-            url = image_object.url
-            res = upload_image(url, "image-generate")
-            urls.append(res)
-
-        print(urls)
+        print(output)
+        res = upload_music(output, "music-generate")
+        print(res)
 
         prompt_data = {
             "userPrompt": message,
-            "images": urls,
-            "size": size,
+            "music": res,
             "ip": ip,
             "device": user_agent,
-            "type": "image",
+            "type": "music",
             "createdAt": datetime.utcnow(),
             "updatedAt": datetime.utcnow()
         }
 
-        # Convert the prompt_data dictionary to an instance of the Prompt model
+        # # Convert the prompt_data dictionary to an instance of the Prompt model
         prompt_model = Prompt(**prompt_data)
 
-        # Insert the prompt_model instance into the collection
-        # await prompts_collection.insert_one(jsonable_encoder(prompt_model))
+        # # Insert the prompt_model instance into the collection
+        # # await prompts_collection.insert_one(jsonable_encoder(prompt_model))
         await mongo.insert_prompt(jsonable_encoder(prompt_model))
 
-        return {"result": response.data}
+        return {"result": output}
     except Exception as error:
-        print("[IMAGE_ERROR]", error)
+        print("[MUSIC_ERROR]", error)
         raise HTTPException(status_code=500, detail="Something went wrong")
