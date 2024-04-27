@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: image-deploy
-          image: farid25/image-generate:v12
+          image: farid25/image-generate:v13
           ports:
             - containerPort: 6000 # Adjust port if your FastAPI app uses a different one
           envFrom:

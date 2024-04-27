@@ -14,23 +14,40 @@ spec:
     spec:
       containers:
         - name: music-deploy
-          image: farid25/music-generate:v1
+          image: farid25/music-generate:latest
           ports:
             - containerPort: 7000 # Adjust port if your FastAPI app uses a different one
           envFrom:
             - configMapRef:
                 name: api-rate-limit-code
+            - configMapRef:
+                name: mongodb-name
           env:
-            - name: OPENAI_API_TOKEN
+            - name: REPLICATE_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: openai-secret
-                  key: openai-api-key
+                  name: replicate-secret
+                  key: replicate-api-key
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
                   name: mongodb-secret
                   key: mongodb-uri
+            - name: CLOUD_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-name
+                  key: cloudinary-cloud-name
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-key
+                  key: cloudinary-api-key
+            - name: API_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: cloud-secret
+                  key: cloudinary-api-secret
 
 ---
 apiVersion: v1

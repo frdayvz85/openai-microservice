@@ -24,6 +24,8 @@ spec:
                 name: node-vg-url
             - configMapRef:
                 name: fastapi-ig-url
+            - configMapRef:
+                name: fastapi-mg-url
 
 ---
 apiVersion: v1
