@@ -6,6 +6,6 @@ COPY ./requirements.txt /music-generate/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /music-generate/requirements.txt
 
-COPY ./app /music-generate/app
+COPY ./app /music-generate
 
-CMD ["uvicorn", "app.src.app:app", "--host", "0.0.0.0", "--port", "7000"]
+CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "7000"]
