@@ -43,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req: Request, res: Response) => {
   const message = `API is working as expected - video generate: ${os.hostname()}`;
   console.log(message);
-  res.send(message);
+  res.status(200).json({message});
 });
 
 app.post("/video", limiter, async (req: Request, res: Response) => {

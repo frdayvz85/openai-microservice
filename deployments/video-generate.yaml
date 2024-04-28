@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: video-deploy
-          image: farid25/video-generate:v5
+          image: farid25/video-generate:v6
           ports:
             - containerPort: 4000 # Adjust port if your Node.js app uses a different one
           envFrom:

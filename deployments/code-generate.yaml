@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: code-deploy
-          image: farid25/code-generate:v9
+          image: farid25/code-generate:v10
           ports:
             - containerPort: 5000 # Adjust port if your Node.js app uses a different one
           envFrom:
