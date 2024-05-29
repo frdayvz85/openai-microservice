@@ -1,5 +1,5 @@
 import os from "os"
-import express, { Express, Request, Response } from "express";
+import express, { Express, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import morgan from 'morgan';
 import cors from "cors"
@@ -73,6 +73,14 @@ app.get("/", (req: Request, res: Response) => {
     console.log(message)
     res.status(200).json({message});
 });
+
+
+// If API doesn't exsist
+app.use((req: Request, res: Response, next: NextFunction) => {
+    const error = new Error("requested URL not found.");
+    res.status(404);
+    next(error);
+  });
 
 
 

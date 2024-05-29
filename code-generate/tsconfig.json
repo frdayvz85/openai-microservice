@@ -11,7 +11,8 @@
     "strict": true,
     "esModuleInterop": true,
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "skipLibCheck": true
   },

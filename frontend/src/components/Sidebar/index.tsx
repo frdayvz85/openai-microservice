@@ -91,11 +91,11 @@ const Sidebar: React.FC = () => {
                 <i className={`bx bx-sun ${styles.icons} ${styles.sun}`}></i>
               </div>
               <span className={`${styles.modeText} ${styles.text}`}>
-                Dark Mode
+                2024 Copyright
               </span>
-              <div className={styles.toggleSwitch}>
+              {/* <div className={styles.toggleSwitch}>
                 <span className={styles.switch}></span>
-              </div>
+              </div> */}
             </li>
           </ul>
         </div>

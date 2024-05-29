@@ -34,6 +34,7 @@
     padding-left: 1rem;
     padding-right: 1rem;
 
+
     @media (min-width: 768px) {
         padding-left: 5rem;
         padding-right: 5rem;
@@ -50,8 +51,8 @@
 
 .card {
     display: flex;
-    border-radius: 0.375rem;
     padding: 1rem;
+    margin-bottom: 12px;
     border-color: rgba(0, 0, 0, 0.2);
     justify-content: space-between;
     align-items: center;
@@ -59,6 +60,9 @@
     transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
     transition-duration: 150ms;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px 3px RGB(0 0 0 / 10%);
+    border-radius: 10px;
+    background-color: #fff;
 }
 
 .card:hover {
@@ -80,16 +84,16 @@
     border-radius: 0.375rem;
 }
 
-.w8 {
+.icon{
+    height: 2rem;
     width: 2rem;
 }
-
-.h8 {
-    height: 2rem;
-}
-
 
 .arrowRight {
     height: 1.25rem;
     width: 1.25rem;
+}
+
+.text-violet-500 {
+    background-color: red;
 }
