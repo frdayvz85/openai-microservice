@@ -46,6 +46,40 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).json({message});
 });
 
+app.get("/prompts", async (req: Request, res: Response) => {
+  try {
+    const prompts = await Prompt.find({})
+    res.status(200).json({ error: false, prompts });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: true, message: 'Internal Server Error' });
+  };
+});
+
+
+app.get("/prompts/:id", async (req: Request, res: Response) => {
+  try {
+    const prompt = await Prompt.findOne({ _id: req.params.id })
+    if (!prompt) return res.status(404).json({ error: true, message: "Prompt not found with specified ID" });
+    res.status(200).json({ error: false, prompt });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: true, message: 'Internal Server Error' });
+  };
+});
+
+app.delete("/prompts/:id", async (req: Request, res: Response) => {
+  try {
+    const prompt = await Prompt.findByIdAndDelete(req.params.id);
+    console.log(prompt);
+    res.status(200).json('Deleted');
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: true, message: 'Internal Server Error' });
+  };
+});
+
+
 app.post("/video", limiter, async (req: Request, res: Response) => {
   try {
     const prompt = req.body.prompt;

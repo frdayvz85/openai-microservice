@@ -1,4 +1,4 @@
-module "eks" {
+module "deveks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "18.29.0"
 
@@ -8,8 +8,8 @@ module "eks" {
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
 
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  vpc_id     = module.devvpc.vpc_id
+  subnet_ids = module.devvpc.private_subnets
 
   enable_irsa = true
 
@@ -18,21 +18,21 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    general = {
-      desired_size = 1
-      min_size     = 1
-      max_size     = 10
+    primary = {
+      desired_size = 2
+      min_size     = 2
+      max_size     = 5
 
       labels = {
-        role = "general"
+        role = "primary"
       }
 
-      instance_types = ["t3.small"]
+      instance_types = ["t4g.nano"]
       capacity_type  = "ON_DEMAND"
     }
   }
 
   tags = {
-    Environment = "staging"
+    Environment = "test"
   }
 }
